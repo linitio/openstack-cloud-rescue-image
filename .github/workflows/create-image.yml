@@ -59,6 +59,7 @@ jobs:
          sudo virt-sysprep -a $BASE_OS_IMAGE
          sudo virt-sparsify --convert qcow2 --compress $BASE_OS_IMAGE cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
          sudo md5sum cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 > md5.txt
+         ls -al
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
