@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build_Image
 
 env:
   VERSION: ${{ github.ref_name }}
@@ -40,7 +40,7 @@ jobs:
          sudo wget "$OS_URL" -O $BASE_OS_IMAGE
       - name: Making some changes on base image
         run: |
-         sudo qemu-img resize $BASE_OS_IMAGE +8G
+         sudo qemu-img resize $BASE_OS_IMAGE +18G
          sudo cp $BASE_OS_IMAGE $BASE_OS_IMAGE.bak
          sudo virt-resize -expand /dev/sda1 $BASE_OS_IMAGE.bak $BASE_OS_IMAGE
          sudo virt-customize -a $BASE_OS_IMAGE --run-command 'grub-install /dev/sda'
@@ -50,7 +50,7 @@ jobs:
          sudo virt-copy-in -a $BASE_OS_IMAGE config/sshd-banner /etc/ssh/
          sudo virt-copy-in -a $BASE_OS_IMAGE config/issue /etc/
          sudo virt-copy-in -a $BASE_OS_IMAGE bin/dynamic-motd/update-motd.d /etc/
-         sudo virt-copy-in -a $BASE_OS_IMAGE config/10-infomaniak /etc/update-motd.d/
+         sudo virt-copy-in -a $BASE_OS_IMAGE config/10-openstack-cloud-rescue /etc/update-motd.d/
          sudo virt-copy-in -a $BASE_OS_IMAGE config/cc_set_passwords.py /usr/lib/python3/dist-packages/cloudinit/config/
          sudo virt-customize -a $BASE_OS_IMAGE --run-command 'chmod -x /etc/update-motd.d/* && chmod +x /etc/update-motd.d/00-figlet /etc/update-motd.d/10-infomaniak && touch /etc/update-motd.d/hushlogin'
          sudo virt-customize -a $BASE_OS_IMAGE --run-command 'echo "Banner /etc/ssh/sshd-banner" >> /etc/ssh/sshd_config'
