@@ -40,7 +40,7 @@ jobs:
          sudo wget "$OS_URL" -O $BASE_OS_IMAGE
       - name: Making some changes on base image
         run: |
-         sudo qemu-img resize $BASE_OS_IMAGE +18G
+         sudo qemu-img resize $BASE_OS_IMAGE +8G
          sudo cp $BASE_OS_IMAGE $BASE_OS_IMAGE.bak
          sudo virt-resize -expand /dev/sda1 $BASE_OS_IMAGE.bak $BASE_OS_IMAGE
          sudo virt-customize -a $BASE_OS_IMAGE --run-command 'grub-install /dev/sda'
