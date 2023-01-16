@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. /etc/update-motd.d/quiet
+. /etc/update-motd.d/colors
+
+printf "\n"$LIGHT_RED
+figlet "  "$(hostname -s)
+printf $NONE
+printf "\n"

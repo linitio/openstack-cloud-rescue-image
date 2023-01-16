@@ -1,0 +1,8 @@
+Welcome on OpenStack Cloud Rescue !
+
+This system is based on Ubuntu 22.04.1 LTS and is only intended for recovery.
+
+DATA WILL BE LOST ON REBOOT, DO NOT USE THIS SYSTEM IN PRODUCTION !
+
+The username is: cloud-rescue
+

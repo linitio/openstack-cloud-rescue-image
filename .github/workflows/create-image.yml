@@ -1,0 +1,92 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+env:
+  VERSION: ${{ github.ref_name }}
+  OS_URL: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+  BASE_OS_IMAGE: base-os.img
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    tags:
+    - '*'
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Install prerequies
+        run: |
+          sudo apt-get update
+          sudo apt install libguestfs-tools wget linux-image-generic -y
+      # Runs a set of commands using the runners shell
+      - name: Download base image from Ubuntu Servers
+        run: |
+         sudo wget "$OS_URL" -O $BASE_OS_IMAGE
+      - name: Making some changes on base image
+        run: |
+         sudo qemu-img resize $BASE_OS_IMAGE +8G
+         sudo cp $BASE_OS_IMAGE $BASE_OS_IMAGE.bak
+         sudo virt-resize -expand /dev/sda1 $BASE_OS_IMAGE.bak $BASE_OS_IMAGE
+         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'grub-install /dev/sda'
+         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'apt update && apt full-upgrade -y && apt install curl dnsutils htop iperf jq less lsof man-db ncdu net-tools nmap rsync telnet wget whois iotop mdadm figlet lsb-release python3-utmp bc -y'
+         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'apt purge snapd motd-news-config -y && apt autopurge -y'
+         sudo virt-copy-in -a $BASE_OS_IMAGE config/cloud.cfg /etc/cloud/
+         sudo virt-copy-in -a $BASE_OS_IMAGE config/sshd-banner /etc/ssh/
+         sudo virt-copy-in -a $BASE_OS_IMAGE config/issue /etc/
+         sudo virt-copy-in -a $BASE_OS_IMAGE bin/dynamic-motd/update-motd.d /etc/
+         sudo virt-copy-in -a $BASE_OS_IMAGE config/10-infomaniak /etc/update-motd.d/
+         sudo virt-copy-in -a $BASE_OS_IMAGE config/cc_set_passwords.py /usr/lib/python3/dist-packages/cloudinit/config/
+         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'chmod -x /etc/update-motd.d/* && chmod +x /etc/update-motd.d/00-figlet /etc/update-motd.d/10-infomaniak && touch /etc/update-motd.d/hushlogin'
+         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'echo "Banner /etc/ssh/sshd-banner" >> /etc/ssh/sshd_config'
+      - name: Sysprep & Sparsify image
+        run: |
+         sudo virt-sysprep -a $BASE_OS_IMAGE
+         sudo virt-sparsify --convert qcow2 --compress $BASE_OS_IMAGE cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
+         sudo md5sum cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 > md5.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: OpenStack Cloud Rescue ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload image to release asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
+          asset_name: cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
+          asset_content_type: application/octet-stream
+
+      - name: Add md5.txt file
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: md5.txt
+          asset_name: md5.txt
+          asset_content_type: text/plain
