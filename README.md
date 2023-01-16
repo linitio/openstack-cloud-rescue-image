@@ -19,7 +19,7 @@
 <h3 align="center">OpenStack Cloud Rescue</h3>
 
   <p align="center">
-    Simple port of Oracle Linux 9 for OpenStack environments
+    Open source cloud image for rescuing cloud instances on OpenStack platforms.
     <br />
     <a href="https://github.com/linitio/openstack-cloud-rescue-image"><strong>Explore the docs »</strong></a>
     <br />
@@ -50,10 +50,10 @@ To get a local copy up and running follow these simple example steps.
 ### How to use this image
 
 1. Set your OpenStack environment variables
-2. Download the latest image from [release page](https://github.com/linitio/openstack-oracle-linux-image/releases "Release page")
+2. Download the latest image from [release page](https://github.com/linitio/openstack-cloud-rescue-image/releases "Release page")
 3. Upload image to your OpenStack environment
    ```sh
-   openstack image create --disk-format=qcow2 --container-format=bare --min-disk 40 --file OL9U0_x86_64-kvm-b142.qcow2  'Oracle Linux 9'
+   openstack image create --disk-format=qcow2 --container-format=bare --file cloud-rescue-xxxx.xxxxxx.x-x86_64.qcow2  'OpenStack Cloud Rescue'
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -79,7 +79,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the GPL-2.0 License. See `LICENSE.md` for more information.
+Distributed under the GPL-3.0 License. See `LICENSE.md` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -90,22 +90,22 @@ Distributed under the GPL-2.0 License. See `LICENSE.md` for more information.
 
 Kevin Allioli - [@linit_io](https://twitter.com/linit_io) - kevin@linit.io
 
-Project Link: [https://github.com/linitio/openstack-oracle-linux-image](https://github.com/linitio/openstack-oracle-linux-image)
+Project Link: [https://github.com/linitio/openstack-cloud-rescue-image](https://github.com/linitio/openstack-cloud-rescue-image)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/linitio/openstack-amazon-linux-2-image.svg?style=for-the-badge
-[contributors-url]: https://github.com/linitio/openstack-oracle-linux-image/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/linitio/openstack-oracle-linux-image.svg?style=for-the-badge
-[forks-url]: https://github.com/linitio/openstack-oracle-linux-image/network/members
-[stars-shield]: https://img.shields.io/github/stars/linitio/openstack-oracle-linux-image.svg?style=for-the-badge
-[stars-url]: https://github.com/linitio/openstack-oracle-linux-image/stargazers
-[issues-shield]: https://img.shields.io/github/issues/linitio/openstack-oracle-linux-image.svg?style=for-the-badge
-[issues-url]: https://github.com/linitio/openstack-oracle-linux-image/issues
-[license-shield]: https://img.shields.io/github/license/linitio/openstack-oracle-linux-image.svg?style=for-the-badge
-[license-url]: https://github.com/linitio/openstack-oracle-linux-image/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/linitio/openstack-cloud-rescue-image.svg?style=for-the-badge
+[contributors-url]: https://github.com/linitio/openstack-cloud-rescue-image/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/linitio/openstack-cloud-rescue-image.svg?style=for-the-badge
+[forks-url]: https://github.com/linitio/openstack-cloud-rescue-image/network/members
+[stars-shield]: https://img.shields.io/github/stars/linitio/openstack-cloud-rescue-image.svg?style=for-the-badge
+[stars-url]: https://github.com/linitio/openstack-cloud-rescue-image/stargazers
+[issues-shield]: https://img.shields.io/github/issues/linitio/openstack-cloud-rescue-image.svg?style=for-the-badge
+[issues-url]: https://github.com/linitio/openstack-cloud-rescue-image/issues
+[license-shield]: https://img.shields.io/github/license/linitio/openstack-cloud-rescue-image.svg?style=for-the-badge
+[license-url]: https://github.com/linitio/openstack-cloud-rescue-image/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kevinallioli
