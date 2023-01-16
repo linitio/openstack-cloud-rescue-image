@@ -52,7 +52,7 @@ jobs:
          sudo virt-copy-in -a $BASE_OS_IMAGE bin/dynamic-motd/update-motd.d /etc/
          sudo virt-copy-in -a $BASE_OS_IMAGE config/10-openstack-cloud-rescue /etc/update-motd.d/
          sudo virt-copy-in -a $BASE_OS_IMAGE config/cc_set_passwords.py /usr/lib/python3/dist-packages/cloudinit/config/
-         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'chmod -x /etc/update-motd.d/* && chmod +x /etc/update-motd.d/00-figlet /etc/update-motd.d/10-infomaniak && touch /etc/update-motd.d/hushlogin'
+         sudo virt-customize -a $BASE_OS_IMAGE --run-command 'chmod -x /etc/update-motd.d/* && chmod +x /etc/update-motd.d/00-figlet /etc/update-motd.d/10-openstack-cloud-rescue && touch /etc/update-motd.d/hushlogin'
          sudo virt-customize -a $BASE_OS_IMAGE --run-command 'echo "Banner /etc/ssh/sshd-banner" >> /etc/ssh/sshd_config'
       - name: Sysprep & Sparsify image
         run: |
