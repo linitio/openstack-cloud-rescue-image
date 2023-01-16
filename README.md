@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/linitio/openstack-cloud-rescue-image">
-    <img src="images/logo.jpg" alt="Logo" width="150" height="150">
+    <img src="images/logo.png" alt="Logo" width="150" height="150">
   </a>
 
 <h3 align="center">OpenStack Cloud Rescue</h3>
