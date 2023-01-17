@@ -50,7 +50,7 @@ To get a local copy up and running follow these simple example steps.
 2. Download the latest image from [release page](https://github.com/linitio/openstack-cloud-rescue-image/releases "Release page")
 3. Upload image to your OpenStack environment
    ```sh
-   openstack image create --disk-format=qcow2 --container-format=bare --file cloud-rescue-xxxx.xxxxxx.x-x86_64.qcow2  'OpenStack Cloud Rescue'
+   openstack image create --disk-format=qcow2 --container-format=bare --file cloud-rescue-<VERSION>-x86_64.qcow2  'OpenStack Cloud Rescue'
    ```
 4. Start your instance in rescue mode, specifying the rescue image id
    ```sh
