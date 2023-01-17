@@ -33,10 +33,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project is a simple port of Oracle Linux 9 from Oracle for OpenStack environments.  
-This image is strictly the same that the original, the only change has been made is adding OpenStack datasource for cloud-init.  
-
-This image is updated when Oracle released a new version on their public repository [here](https://yum.oracle.com/oracle-linux-templates.html "Oracle Images Repository").
+This cloud-ready image is based on Ubuntu 22.04 LTS. On top of the base operating system, this image integrates several troubleshooting packages such as curl, dnsutils, ncdu, mdadm and more. This image is primarily meant to be used with OpenStack's rescue mode.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -55,7 +52,20 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    openstack image create --disk-format=qcow2 --container-format=bare --file cloud-rescue-xxxx.xxxxxx.x-x86_64.qcow2  'OpenStack Cloud Rescue'
    ```
-
+4. Start your instance in rescue mode, specifying the rescue image id
+   ```sh
+   openstack server rescue --image RESCUE_IMAGE_ID INSTANCE_ID
+   ```
+   If you want to use password authentication, add --password
+   ```sh
+   openstack server rescue --image RESCUE_IMAGE_ID --password YOUR_PASSWORD INSTANCE_ID
+   ```
+5. You can now logging via SSH (with public key or password) or VNC console. The default user is **rescue-user**
+   
+6. Once done, turn off rescue mode
+   ```sh
+   openstack server unrescue INSTANCE_ID
+   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
