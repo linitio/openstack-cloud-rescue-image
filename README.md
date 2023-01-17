@@ -60,7 +60,8 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    openstack server rescue --image RESCUE_IMAGE_ID --password YOUR_PASSWORD INSTANCE_ID
    ```
-5. You can now logging via SSH (with public key or password) or VNC console. The default user is **rescue-user**
+5. You can now logging via SSH (with public key or password) or VNC console.  
+The default user is **rescue-user**
    
 6. Once done, turn off rescue mode
    ```sh
