@@ -21,7 +21,7 @@
   <p align="center">
     Open source cloud image for rescuing cloud instances on OpenStack platforms.
     <br />
-    <a href="https://github.com/linitio/openstack-cloud-rescue-image"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/linitio/openstack-cloud-rescue-image/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/linitio/openstack-cloud-rescue-image/issues">Report Bug</a>
