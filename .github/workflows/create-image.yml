@@ -32,8 +32,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install prerequies
         run: |
-          sudo apt-get update
-          sudo apt install libguestfs-tools wget linux-image-generic -y
+          sudo dnf -y update
+          sudo dnf install -y libguestfs-tools wget
       # Runs a set of commands using the runners shell
       - name: Download base image from Ubuntu Servers
         run: |
