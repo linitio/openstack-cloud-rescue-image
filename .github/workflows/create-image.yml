@@ -59,35 +59,12 @@ jobs:
          sudo virt-sysprep -a $BASE_OS_IMAGE
          sudo virt-sparsify --convert qcow2 --compress $BASE_OS_IMAGE cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
          sudo md5sum cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 > md5.txt
-         ls -al
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          name: OpenStack Cloud Rescue ${{ env.VERSION }}
-          draft: false
-          prerelease: false
-
-      - name: Upload image to release asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
-          asset_name: cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
-          asset_content_type: application/octet-stream
-
-      - name: Add md5.txt file
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: md5.txt
-          asset_name: md5.txt
-          asset_content_type: text/plain
+      
+      - name: Uploading image in object storage
+        run: |
+         echo "Uploading image in object storage"
+         mc alias set ${{ env.S3_ALIAS }} ${{ env.S3_ENDPOINT }} ${{ env.ACCESS_KEY }} ${{ env.SECRET_KEY }}
+         mc cp cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
+	 mc cp md5.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/md5.txt
+         mc cp ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/${{ env.BUILD }}/cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
+         mc cp ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/md5.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/${{ env.BUILD }}/md5.txt
