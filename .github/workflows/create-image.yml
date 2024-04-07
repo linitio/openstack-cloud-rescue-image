@@ -6,6 +6,11 @@ env:
   VERSION: ${{ github.ref_name }}
   OS_URL: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
   BASE_OS_IMAGE: base-os.img
+  S3_ENDPOINT: ${{ vars.S3_ENDPOINT }}
+  ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  S3_ALIAS: ${{ secrets.S3_ALIAS }}
+  S3_BUCKET: ${{ vars.S3_BUCKET }}
 
 # Controls when the workflow will run
 on:
