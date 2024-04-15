@@ -64,6 +64,8 @@ jobs:
          sudo virt-sysprep -a $BASE_OS_IMAGE
          sudo virt-sparsify --convert qcow2 --compress $BASE_OS_IMAGE cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
          sudo md5sum cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 > md5.txt
+         sudo sha1sum -b cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 > sha1.txt
+         sudo sha256sum -b cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 > sha256.txt
       
       - name: Uploading image in object storage
         run: |
@@ -71,5 +73,9 @@ jobs:
          mc alias set ${{ env.S3_ALIAS }} ${{ env.S3_ENDPOINT }} ${{ env.ACCESS_KEY }} ${{ env.SECRET_KEY }}
          mc cp cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
          mc cp md5.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/md5.txt
+         mc cp sha1.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/sha1.txt
+         mc cp sha256.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/sha256.txt
          mc cp ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/cloud-rescue-${{ env.VERSION }}-x86_64.qcow2 ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/${{ env.VERSION }}/cloud-rescue-${{ env.VERSION }}-x86_64.qcow2
          mc cp ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/md5.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/${{ env.VERSION }}/md5.txt
+         mc cp ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/sha1.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/${{ env.VERSION }}/sha1.txt
+         mc cp ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/latest/sha256.txt ${{ env.S3_ALIAS }}/${{ env.S3_BUCKET }}/${{ env.VERSION }}/sha256.txt
