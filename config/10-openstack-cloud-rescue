@@ -3,7 +3,7 @@
 printf "\n"
 printf "Welcome on OpenStack Cloud Rescue !\n"
 printf "\n"
-printf "This system is based on Ubuntu 22.04.1 LTS and is only intended for recovery.\n"
+printf "This system is based on Ubuntu 22.04.4 LTS and is only intended for recovery.\n"
 printf "\n"
 printf "\e[1;31mDATA WILL BE LOST ON REBOOT, DO NOT USE THIS SYSTEM IN PRODUCTION !\e[0m\n"
 printf "\n"
